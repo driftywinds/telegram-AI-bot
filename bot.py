@@ -1,4 +1,5 @@
 import os
+import re
 import base64
 import google.generativeai as genai
 from telegram import Update
@@ -11,11 +12,25 @@ load_dotenv()
 
 # Configure Google AI
 genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
-text_model = genai.GenerativeModel('gemini-2.0-flash') # You can change this to whichever model you want
-vision_model = genai.GenerativeModel('gemini-2.0-flash') # You can change this to whichever model you want
+text_model = genai.GenerativeModel('gemini-2.0-flash')
+vision_model = genai.GenerativeModel('gemini-2.0-flash')
 
 # Store chat histories per user
 chats = {}
+
+def format_response(text):
+    """Convert markdown-style formatting to Telegram HTML formatting"""
+    # Convert **bold** to <b>bold</b>
+    text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', text)
+    # Convert *italic* to <i>italic</i>
+    text = re.sub(r'\*(.*?)\*', r'<i>\1</i>', text)
+    # Convert `code` to <code>code</code>
+    text = re.sub(r'`(.*?)`', r'<code>\1</code>', text)
+    # Convert ~~strikethrough~~ to <s>strikethrough</s>
+    text = re.sub(r'~~(.*?)~~', r'<s>\1</s>', text)
+    # Convert [link text](url) to <a href="url">link text</a>
+    text = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a href="\2">\1</a>', text)
+    return text
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
@@ -56,7 +71,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
             # Get response from vision model
             response = await vision_model.generate_content_async(contents)
-            await message.reply_text(response.text)
+            formatted_response = format_response(response.text)
+            await message.reply_text(formatted_response, parse_mode='HTML')
             
         else:
             # Handle text messages
@@ -65,7 +81,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             
             user_message = message.text
             response = await chats[user_id].send_message_async(user_message)
-            await message.reply_text(response.text)
+            formatted_response = format_response(response.text)
+            await message.reply_text(formatted_response, parse_mode='HTML')
             
     except Exception as e:
         await message.reply_text(f"Sorry, there was an error: {str(e)}")
