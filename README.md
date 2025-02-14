@@ -1,5 +1,5 @@
 # My Telegram AI bot
-A barely working, pretty slow Telegram bot that uses Openrouter to talk to you.
+A barely working, pretty slow python Telegram bot that uses Gemini API to talk to you.
 
 Features: -
 1) Replies instantly
