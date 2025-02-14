@@ -1,6 +1,12 @@
 # My Telegram AI bot
 A barely working, pretty slow Telegram bot that uses Openrouter to talk to you.
 
+Features: -
+1) Replies instantly
+2) Can analyze images and files
+3) It's personalized, and on Telegram
+4) Should have working memory too, but haven't extensively tested that yet
+
 How to use: -
 1) Download the ```bot.py``` file, and the ```.env``` file
 2) Replace the API Keys in the ```.env``` file with your own
