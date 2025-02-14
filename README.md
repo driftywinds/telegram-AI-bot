@@ -3,7 +3,7 @@ A bare bones python Telegram bot that uses Gemini API to talk to you.
 
 Features: -
 1) Replies instantly
-2) Can analyze images and files
+2) Can analyze images (NOT FILES)
 3) It's personalized, and on Telegram
 4) Should have working memory too, but haven't extensively tested that yet
 
