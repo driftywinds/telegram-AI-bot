@@ -8,7 +8,7 @@ Features: -
 4) Should have working memory too, but haven't extensively tested that yet
 
 How to use: -
-1) Download the ```bot.py``` file, and the ```.env``` file
+1) Download the ```bot.py``` file, and the ```.env``` file and keep them together in the same directory
 2) Replace the API Keys in the ```.env``` file with your own
 3) OPTIONAL (linux): open a new terminal with tmux or screen
 4) Run ```python3 bot.py```
