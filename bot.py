@@ -12,8 +12,8 @@ load_dotenv()
 
 # Configure Google AI
 genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
-text_model = genai.GenerativeModel('gemini-2.0-flash')
-vision_model = genai.GenerativeModel('gemini-2.0-flash')
+text_model = genai.GenerativeModel('gemini-2.0-flash') # You can change this according to your requirements
+vision_model = genai.GenerativeModel('gemini-2.0-flash') # You can change this according to your requirements
 
 # Store chat histories per user
 chats = {}
